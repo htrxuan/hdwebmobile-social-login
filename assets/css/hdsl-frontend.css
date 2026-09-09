@@ -1,0 +1,32 @@
+.hdsl-google-signin {
+    margin: 0 0 1.5em;
+}
+
+.hdsl-google-signin .g_id_signin {
+    margin-bottom: 1em;
+}
+
+.hdsl-divider {
+    position: relative;
+    text-align: center;
+    margin: 1em 0;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 0.9em;
+}
+
+.hdsl-divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 0;
+}
+
+.hdsl-divider span {
+    position: relative;
+    background: #fff;
+    padding: 0 0.75em;
+    z-index: 1;
+}

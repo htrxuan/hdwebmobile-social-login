@@ -16,8 +16,8 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 HDWebmobile Social Login adds a "Continue with Google" button to your WooCommerce login and registration forms, alongside the normal password login. Customers can sign up or sign back in with one click, without typing a password.
 
-= Why this plugin exists =
-A competing WooCommerce social-login plugin had a critical authentication-bypass vulnerability (CVE-2026-8457, CVSS 9.8): its "Sign in with Apple" handler read the email address out of the identity token and logged the visitor straight in as the matching WordPress account -- without ever verifying the token's digital signature against Apple's public keys. An attacker could hand-craft a token claiming to be any email address, including an administrator's, and be logged in with zero credentials and zero existing access. This plugin closes that entire vulnerability class by construction, not by a bolted-on check:
+= Security by design =
+The most dangerous mistake a social login can make is reading the email address out of an identity token and logging the visitor straight in as the matching WordPress account -- without ever verifying the token's digital signature against the identity provider's public keys (CWE-347). An attacker could hand-craft a token claiming to be any email address, including an administrator's, and be logged in with zero credentials. This plugin closes that entire vulnerability class by construction, not by a bolted-on check:
 
 * Every Google identity token is cryptographically verified against Google's own, currently-published public keys (fetched live from Google's own JWKS endpoint, never hardcoded or stale) before a single claim inside it is trusted -- the exact check the vulnerable plugin skipped.
 * The token's algorithm, issuer, audience (this site's own Client ID), expiry, and Google's own "email verified" flag are all independently checked. Any single failure rejects the token completely -- there is no partial-trust fallback.
@@ -51,6 +51,15 @@ Paste the Client ID into WooCommerce > HDWebmobile > Social Login and save.
 
 = 3. Customers sign in =
 The "Continue with Google" button now appears on your My Account login page.
+
+== External services ==
+
+This plugin connects to Google's sign-in service ("Sign in with Google" / Google Identity Services) to let customers log in or register with their Google account. Nothing is sent to Google until the site owner has entered their own Google OAuth Client ID in the plugin settings.
+
+* **Google Identity Services client script** (`https://accounts.google.com/gsi/client`) is loaded in the visitor's browser on the WooCommerce My Account page, to show the "Continue with Google" button. When a visitor clicks it, Google handles the sign-in and returns a signed identity token (containing the visitor's Google account id, name, email address and email-verified status) to this site. Loading the script also sends Google the usual browser request data (such as IP address and user agent).
+* **Google's public signing keys** (`https://www.googleapis.com/oauth2/v3/certs`) are fetched by the server to verify that identity token's signature. This request sends no visitor or site data; the keys are cached according to Google's own cache headers.
+
+This service is provided by Google LLC: [Terms of Service](https://policies.google.com/terms), [Privacy Policy](https://policies.google.com/privacy).
 
 == Screenshots ==
 

@@ -35,6 +35,9 @@ The most dangerous mistake a social login can make is reading the email address 
 * Google only in this version -- no Facebook, Apple, or other providers
 * Requires a free Google OAuth Client ID from Google Cloud Console (a few minutes of one-time setup)
 
+= Enjoying this plugin? =
+If it helps your site, please consider [leaving an honest review on WordPress.org](https://wordpress.org/support/plugin/hdwebmobile-social-login/reviews/#new-post) -- it helps other WordPress users find it. Found a problem or have an idea? Please [open a support topic](https://wordpress.org/support/plugin/hdwebmobile-social-login/) first so it can be fixed.
+
 == Installation ==
 
 1. Upload the plugin files to the `/wp-content/plugins/hdwebmobile-social-login` directory, or install the plugin through the WordPress plugins screen directly.
